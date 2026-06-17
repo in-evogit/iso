@@ -1,0 +1,12 @@
+# dependencias y build
+node_modules/
+dist/
+.astro/
+
+# sistema
+.DS_Store
+.Rhistory
+*.log
+
+# material de referencia (no va al repo: pesa y es fuente, no código)
+referencias/
