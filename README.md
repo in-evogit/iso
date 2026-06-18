@@ -64,7 +64,7 @@ Buscar los marcadores en el código:
   - Formspree: reemplazar `https://formspree.io/f/TU_FORM_ID` por el ID real (crear formulario en [formspree.io](https://formspree.io)).
   - WhatsApp: reemplazar `56900000000` por el número real.
   - Email: reemplazar `contacto@sdisystems.cl`.
-- **Video del hero** (`src/components/Hero.astro`): `hero-broll.mp4` está versionado pero **no montado** — pendiente re-edición con Higgsfield (tiene branding viejo de Element Logic). Cuando esté listo, descomentar el `<video>` del Hero. Conviene comprimirlo a < 3–4 MB.
+- **Video del hero** (`src/components/Hero.astro`): montado como fondo (`hero-loop.mp4` + poster `hero-poster.jpg`). En la carpeta también está `hero-full.mp4` por si se prefiere esa versión.
 - **Dominio** definitivo (.cl o .com) → actualizar `site` en `astro.config.mjs`.
 - **i18n** (inglés): la estructura está preparada, v1 es solo español.
 
