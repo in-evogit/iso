@@ -1,5 +1,6 @@
 ---
-// Copy TEXTUAL de la seccion 4 — "El Ciclo SDI". Iconos inline.
+// El Ciclo SDI — timeline horizontal conectado. La linea de progreso se dibuja
+// al hacer scroll (GSAP ScrollTrigger). Copy TEXTUAL de las 4 fases.
 const etapas = [
   {
     n: "1",
@@ -26,138 +27,199 @@ const etapas = [
     icon: "support",
   },
 ];
+
+const paths: Record<string, string> = {
+  design: '<path d="M3 21l3-1 11-11-2-2L4 18l-1 3z"/><path d="M14 7l3 3"/><path d="M3 3h6M3 3v6"/>',
+  engineering: '<circle cx="12" cy="12" r="3.2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>',
+  install: '<path d="M14.7 6.3a4 4 0 00-5.4 5.4l-6 6 2 2 6-6a4 4 0 005.4-5.4l-2.3 2.3-2-2 2.3-2.3z"/>',
+  support: '<path d="M4 13v-1a8 8 0 0116 0v1"/><path d="M4 13a2 2 0 012 2v2a2 2 0 01-2 2 1 1 0 01-1-1v-4a1 1 0 011-1zM20 13a2 2 0 00-2 2v2a2 2 0 002 2 1 1 0 001-1v-4a1 1 0 00-1-1z"/><path d="M18 19a4 4 0 01-4 3h-2"/>',
+};
 ---
 
 <section class="section section--navy" id="servicios">
   <div class="container">
     <div class="section-head section-head--center">
+      <span class="section-num">04</span>
       <span class="eyebrow">Servicios · El Ciclo SDI</span>
       <h2 class="section-title">Un acompañamiento integral de principio a fin</h2>
     </div>
 
-    <ol class="ciclo">
+    <div class="ciclo" data-ciclo>
+      <div class="ciclo__track" aria-hidden="true">
+        <span class="ciclo__progress" data-ciclo-progress></span>
+      </div>
+      <ol class="ciclo__steps">
       {
         etapas.map((e, i) => (
           <li class="ciclo__step" data-reveal style={`--reveal-delay:${i * 0.08}s`}>
-            <div class="ciclo__top">
-              <span class="ciclo__icon">
-                {e.icon === "design" && (
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M3 21l3-1 11-11-2-2L4 18l-1 3z" />
-                    <path d="M14 7l3 3" />
-                    <path d="M3 3h6M3 3v6" />
-                  </svg>
-                )}
-                {e.icon === "engineering" && (
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <circle cx="12" cy="12" r="3.2" />
-                    <path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2" />
-                  </svg>
-                )}
-                {e.icon === "install" && (
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M14.7 6.3a4 4 0 00-5.4 5.4l-6 6 2 2 6-6a4 4 0 005.4-5.4l-2.3 2.3-2-2 2.3-2.3z" />
-                  </svg>
-                )}
-                {e.icon === "support" && (
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M4 13v-1a8 8 0 0116 0v1" />
-                    <path d="M4 13a2 2 0 012 2v2a2 2 0 01-2 2 1 1 0 01-1-1v-4a1 1 0 011-1zM20 13a2 2 0 00-2 2v2a2 2 0 002 2 1 1 0 001-1v-4a1 1 0 00-1-1z" />
-                    <path d="M18 19a4 4 0 01-4 3h-2" />
-                  </svg>
-                )}
+            <span class="ciclo__node" aria-hidden="true" />
+            <div class="ciclo__head">
+              <span class="ciclo__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" set:html={paths[e.icon]} />
               </span>
-              <span class="ciclo__num">{e.n}</span>
+              <span class="ciclo__num">0{e.n}</span>
             </div>
             <h3 class="ciclo__title">{e.titulo}</h3>
             <p class="ciclo__desc">{e.desc}</p>
           </li>
         ))
       }
-    </ol>
+      </ol>
+    </div>
   </div>
 </section>
 
 <style>
   .ciclo {
+    --p: 0;
+    position: relative;
+    padding-top: 2.75rem;
+  }
+
+  .ciclo__steps {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
-    counter-reset: step;
+    gap: clamp(1.25rem, 3vw, 2rem);
+  }
+
+  /* Linea base + progreso (desktop: horizontal, alineada a los nodos) */
+  .ciclo__track {
+    position: absolute;
+    top: 0.55rem;
+    left: 12.5%;
+    right: 12.5%;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.16);
+    border-radius: 2px;
+  }
+
+  .ciclo__progress {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: calc(var(--p) * 100%);
+    background: linear-gradient(90deg, var(--brand-blue), var(--brand-gold));
+    border-radius: 2px;
   }
 
   .ciclo__step {
     position: relative;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: var(--radius);
-    padding: 1.6rem;
+    padding: 0 0.25rem;
   }
 
-  /* Linea conectora entre etapas (desktop) */
-  .ciclo__step:not(:last-child)::after {
-    content: "";
+  .ciclo__node {
     position: absolute;
-    top: 2.5rem;
-    right: -0.9rem;
-    width: 1.8rem;
-    height: 2px;
-    background: linear-gradient(90deg, var(--brand-gold), transparent);
+    top: -2.2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--brand-navy);
+    border: 2px solid var(--brand-gold);
+    box-shadow: 0 0 0 4px rgba(52, 56, 67, 1);
   }
 
-  .ciclo__top {
+  .ciclo__head {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 1.1rem;
+    margin-bottom: 1rem;
   }
 
   .ciclo__icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 52px;
-    height: 52px;
+    width: 50px;
+    height: 50px;
     border-radius: 12px;
-    background: rgba(220, 154, 22, 0.16);
+    background: rgba(222, 171, 36, 0.14);
     color: var(--brand-gold);
   }
 
   .ciclo__icon svg {
-    width: 26px;
-    height: 26px;
+    width: 25px;
+    height: 25px;
   }
 
   .ciclo__num {
-    font-size: 2.4rem;
-    font-weight: 800;
-    color: rgba(255, 255, 255, 0.14);
+    font-family: var(--font-head);
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.16);
     line-height: 1;
   }
 
   .ciclo__title {
     color: var(--white);
-    font-size: 1.08rem;
-    margin-bottom: 0.6rem;
+    font-size: 1.06rem;
+    margin-bottom: 0.55rem;
   }
 
   .ciclo__desc {
     color: #b8bbc9;
     font-size: 0.93rem;
+    line-height: 1.55;
   }
 
-  @media (max-width: 940px) {
+  /* Tablet/movil: timeline vertical a la izquierda */
+  @media (max-width: 860px) {
     .ciclo {
-      grid-template-columns: repeat(2, 1fr);
+      padding-top: 0;
+      padding-left: 2.25rem;
     }
-    .ciclo__step::after {
-      display: none;
-    }
-  }
-
-  @media (max-width: 560px) {
-    .ciclo {
+    .ciclo__steps {
       grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .ciclo__track {
+      top: 0.5rem;
+      bottom: 0.5rem;
+      left: 6px;
+      right: auto;
+      width: 2px;
+      height: auto;
+    }
+
+    .ciclo__progress {
+      inset: 0 0 auto 0;
+      width: 2px;
+      height: calc(var(--p) * 100%);
+      background: linear-gradient(180deg, var(--brand-blue), var(--brand-gold));
+    }
+
+    .ciclo__node {
+      top: 0.4rem;
+      left: -2.25rem;
+      transform: none;
     }
   }
 </style>
+
+<script>
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const ciclo = document.querySelector<HTMLElement>("[data-ciclo]");
+  if (ciclo) {
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) {
+      // Sin animacion: linea completa de inmediato
+      ciclo.style.setProperty("--p", "1");
+    } else {
+      gsap.to(ciclo, {
+        "--p": 1,
+        ease: "none",
+        scrollTrigger: {
+          trigger: ciclo,
+          start: "top 75%",
+          end: "bottom 65%",
+          scrub: 0.4,
+        },
+      });
+    }
+  }
+</script>
