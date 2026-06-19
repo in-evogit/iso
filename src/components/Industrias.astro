@@ -1,0 +1,219 @@
+---
+// Industrias — reincorporada (se elimino en acbac4b). Copy recuperado de git
+// y reestructurado en "Desafio -> Nuestra Respuesta". Formato de ficha (no card).
+const industrias = [
+  {
+    nombre: "E-Commerce",
+    desafio: "Miles de pedidos diarios con tiempos de entrega exigentes.",
+    respuesta: "Almacenamiento automatizado, clasificación de alta velocidad y picking.",
+    icon: "cart",
+  },
+  {
+    nombre: "Moda y Textil (Apparel)",
+    desafio: "Catálogos amplios con alta tasa de devoluciones y cambios.",
+    respuesta: "Soluciones especializadas para prenda colgada y doblada.",
+    icon: "apparel",
+  },
+  {
+    nombre: "Grandes Cadenas de Retail",
+    desafio: "Operación omnicanal que exige reposición ágil en tienda.",
+    respuesta: "Clasificación, secuenciación y consolidación para reposición.",
+    icon: "retail",
+  },
+  {
+    nombre: "Operadores Logísticos (3PL)",
+    desafio: "Múltiples clientes con necesidades operativas cambiantes.",
+    respuesta: "Plataformas modulares y escalables, adaptables por cliente.",
+    icon: "box",
+  },
+  {
+    nombre: "Consumo Masivo y Farmacéutico",
+    desafio: "Altos volúmenes con exigencias estrictas de trazabilidad.",
+    respuesta: "Software más automatización, con control en tiempo real.",
+    icon: "pharma",
+  },
+];
+
+const paths: Record<string, string> = {
+  cart: '<circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h2.2l2.1 12.4a1.5 1.5 0 001.5 1.2h9.2a1.5 1.5 0 001.5-1.2L21 7H5.3"/>',
+  apparel: '<path d="M9 3l3 2 3-2 5 3-2 4-2-1v9H8v-9l-2 1-2-4 5-3z"/>',
+  retail: '<path d="M4 7l1-3h14l1 3"/><path d="M4 7h16v3a3 3 0 01-6 0 3 3 0 01-6 0 3 3 0 01-4 0V7z"/><path d="M5 11v9h14v-9"/>',
+  box: '<path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/>',
+  pharma: '<path d="M10.5 3.5l10 10a4 4 0 01-5.6 5.6l-10-10a4 4 0 015.6-5.6z"/><path d="M8 6l10 10"/>',
+};
+---
+
+<section class="section" id="industrias">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-num">03</span>
+      <span class="eyebrow">Industrias</span>
+      <h2 class="section-title">Soluciones adaptadas a cada industria</h2>
+      <p class="section-intro">
+        Cada sector enfrenta desafíos logísticos propios. Diseñamos la respuesta
+        a la medida de tu operación.
+      </p>
+    </div>
+
+    <ul class="ind">
+      {
+        industrias.map((ind, i) => (
+          <li class="ind__row" data-reveal style={`--reveal-delay:${i * 0.05}s`}>
+            <div class="ind__sector">
+              <span class="ind__icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                  set:html={paths[ind.icon]}
+                />
+              </span>
+              <h3 class="ind__name">{ind.nombre}</h3>
+            </div>
+
+            <div class="ind__challenge">
+              <span class="ind__label">Desafío</span>
+              <p>{ind.desafio}</p>
+            </div>
+
+            <svg class="ind__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+
+            <div class="ind__answer">
+              <span class="ind__label ind__label--answer">Nuestra respuesta</span>
+              <p>{ind.respuesta}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .ind {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .ind__row {
+    display: grid;
+    grid-template-columns: minmax(220px, 1fr) 1.3fr auto 1.3fr;
+    align-items: center;
+    gap: clamp(1rem, 3vw, 2rem);
+    padding: clamp(1.25rem, 2.5vw, 1.75rem) clamp(1.25rem, 2.5vw, 1.75rem);
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--brand-blue);
+    border-radius: var(--radius-sm);
+    transition: box-shadow var(--t), border-color var(--t);
+  }
+
+  .ind__row:hover {
+    box-shadow: var(--shadow);
+    border-left-color: var(--brand-gold);
+  }
+
+  .ind__sector {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+  }
+
+  .ind__icon {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 11px;
+    background: rgba(67, 127, 172, 0.1);
+    color: var(--brand-blue);
+  }
+
+  .ind__icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .ind__name {
+    font-size: 1.05rem;
+    line-height: 1.2;
+  }
+
+  .ind__label {
+    display: block;
+    font-family: var(--font-head);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--brand-gray);
+    margin-bottom: 0.3rem;
+  }
+
+  .ind__label--answer {
+    color: var(--brand-blue);
+  }
+
+  .ind__challenge p,
+  .ind__answer p {
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .ind__answer p {
+    color: var(--brand-navy);
+    font-weight: 500;
+  }
+
+  .ind__arrow {
+    width: 26px;
+    height: 26px;
+    color: var(--brand-gold);
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 900px) {
+    .ind__row {
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas:
+        "sector sector"
+        "challenge answer";
+      gap: 1.25rem;
+    }
+    .ind__sector {
+      grid-area: sector;
+    }
+    .ind__challenge {
+      grid-area: challenge;
+    }
+    .ind__answer {
+      grid-area: answer;
+    }
+    .ind__arrow {
+      display: none;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .ind__row {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        "sector"
+        "challenge"
+        "answer";
+    }
+    .ind__answer {
+      padding-top: 1rem;
+      border-top: 1px dashed var(--line);
+    }
+  }
+</style>
