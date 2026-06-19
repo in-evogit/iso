@@ -1,9 +1,12 @@
 ---
+// Cuerpo: Inter (neutra legible). Titulares: Space Grotesk (grotesca con caracter).
 import "@fontsource/inter/400.css";
 import "@fontsource/inter/500.css";
 import "@fontsource/inter/600.css";
 import "@fontsource/inter/700.css";
-import "@fontsource/inter/800.css";
+import "@fontsource/space-grotesk/500.css";
+import "@fontsource/space-grotesk/600.css";
+import "@fontsource/space-grotesk/700.css";
 import "../styles/global.css";
 
 interface Props {
@@ -35,7 +38,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content="/assets/logos/Logo1.png" />
-    <meta name="theme-color" content="#2C2C42" />
+    <meta name="theme-color" content="#343843" />
     <meta name="generator" content={Astro.generator} />
   </head>
   <body>

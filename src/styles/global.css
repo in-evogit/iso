@@ -1,24 +1,27 @@
 /* ===========================================================
    SDI Systems — estilos globales
-   Paleta extraida de los logos de marca (ver INSTRUCCIONES seccion 5).
+   Direccion visual: "precision de ingenieria" — corporativo, sobrio,
+   base clara con secciones navy intercaladas. Paleta exacta de marca.
    =========================================================== */
 
 :root {
-  /* --- Paleta de marca (HEX exactos) --- */
-  --brand-blue: #426E9A;
-  --brand-gold: #DC9A16;
-  --brand-gray: #848484;
-  --brand-navy: #2C2C42;
-  --bg-light: #F4F6F8;
-  --white: #FFFFFF;
+  /* --- Paleta de marca (HEX exactos del logo — UNICOS colores permitidos) --- */
+  --brand-navy: #343843; /* estructural: texto, CTAs sobre blanco, fondos oscuros */
+  --brand-blue: #437FAC; /* acento: eyebrows, highlights, detalles */
+  --brand-gold: #DEAB24; /* acento: CTAs sobre navy, enfasis puntual */
+  --brand-gray: #929293; /* texto secundario, labels, datos de apoyo */
+  --brand-red: #901526;  /* RESERVADO: detalles muy puntuales (alarma) — no abusar */
+  --white: #FFFFFF;       /* fondo dominante */
+  --bg-light: #F5F6F8;    /* fondo de seccion alterno muy claro */
 
-  /* --- Derivados para gradientes / estados (tonalidades de la marca) --- */
-  --brand-blue-dark: #2F5274;
-  --brand-navy-deep: #21212f;
-  --brand-gold-dark: #b87f0f;
+  /* --- Derivados para estados/gradientes (tonalidades de la marca) --- */
+  --brand-blue-dark: #356488;
+  --brand-navy-deep: #2A2D36;
+  --brand-gold-dark: #BC8E1A;
   --ink: var(--brand-navy);
-  --muted: #5d5d6b;
-  --line: #e3e7ec;
+  --muted: #5d6270; /* cuerpo secundario legible (gris de marca aclara contraste) */
+  --line: #e4e7ec;
+  --line-blueprint: rgba(67, 127, 172, 0.08); /* grilla blueprint tenue */
 
   /* --- Layout --- */
   --maxw: 1180px;
@@ -28,12 +31,13 @@
   /* --- Forma --- */
   --radius: 14px;
   --radius-sm: 10px;
-  --shadow-sm: 0 1px 3px rgba(44, 44, 66, 0.08);
-  --shadow: 0 10px 30px rgba(44, 44, 66, 0.10);
-  --shadow-lg: 0 24px 60px rgba(44, 44, 66, 0.16);
+  --shadow-sm: 0 1px 3px rgba(52, 56, 67, 0.08);
+  --shadow: 0 10px 30px rgba(52, 56, 67, 0.10);
+  --shadow-lg: 0 24px 60px rgba(52, 56, 67, 0.16);
 
   /* --- Tipografia --- */
   --font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-head: "Space Grotesk", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
 
   /* --- Transiciones --- */
   --t: 0.25s ease;
@@ -92,10 +96,11 @@ h1,
 h2,
 h3,
 h4 {
-  line-height: 1.15;
-  font-weight: 700;
+  font-family: var(--font-head);
+  line-height: 1.12;
+  font-weight: 600;
   color: var(--brand-navy);
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
 }
 
 :focus-visible {
@@ -285,6 +290,59 @@ h4 {
 .icon-badge svg {
   width: 26px;
   height: 26px;
+}
+
+/* ----------------------- Motivo grafico: numeracion de seccion ----------------------- */
+/* Numeracion 01, 02... sutil junto al eyebrow (precision de ingenieria) */
+.section-num {
+  display: inline-block;
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  color: var(--brand-gray);
+  margin-bottom: 0.65rem;
+}
+
+.section-num::before {
+  content: "";
+  display: inline-block;
+  width: 1.6rem;
+  height: 1px;
+  background: var(--brand-blue);
+  vertical-align: middle;
+  margin-right: 0.6rem;
+  opacity: 0.7;
+}
+
+.section--navy .section-num {
+  color: #aeb2bf;
+}
+
+/* ----------------------- Motivo grafico: grilla "blueprint" tenue ----------------------- */
+.blueprint {
+  position: relative;
+  isolation: isolate;
+}
+
+.blueprint::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(to right, var(--line-blueprint) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--line-blueprint) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 75%);
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 75%);
+  pointer-events: none;
+}
+
+.section--navy.blueprint::before {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
 }
 
 /* ----------------------- Animacion de scroll ----------------------- */
