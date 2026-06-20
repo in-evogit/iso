@@ -295,33 +295,6 @@ h4 {
   height: 26px;
 }
 
-/* ----------------------- Motivo grafico: numeracion de seccion ----------------------- */
-/* Numeracion 01, 02... sutil junto al eyebrow (precision de ingenieria) */
-.section-num {
-  display: inline-block;
-  font-family: var(--font-head);
-  font-weight: 600;
-  font-size: 0.8rem;
-  letter-spacing: 0.14em;
-  color: var(--muted); /* AA sobre blanco (el gris de marca falla en texto pequeño) */
-  margin-bottom: 0.65rem;
-}
-
-.section-num::before {
-  content: "";
-  display: inline-block;
-  width: 1.6rem;
-  height: 1px;
-  background: var(--brand-blue);
-  vertical-align: middle;
-  margin-right: 0.6rem;
-  opacity: 0.7;
-}
-
-.section--navy .section-num {
-  color: #aeb2bf;
-}
-
 /* ----------------------- Motivo grafico: grilla "blueprint" tenue ----------------------- */
 .blueprint {
   position: relative;
