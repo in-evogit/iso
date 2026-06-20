@@ -28,7 +28,7 @@ const metricas = [
   <div class="hero__scrim" aria-hidden="true"></div>
 
   <div class="hero__watermark" aria-hidden="true">
-    <img src="/assets/logos/Logo2-watermark.png" alt="" width="1570" height="672" loading="lazy" />
+    <img src="/assets/logos/sdi-icon.png" alt="" width="458" height="468" loading="lazy" />
   </div>
 
   <div class="container hero__content">
@@ -108,7 +108,8 @@ const metricas = [
   }
 
   .hero__watermark img {
-    width: clamp(480px, 65vw, 960px);
+    /* Icono circular (~1:1): mas compacto que el logo horizontal anterior */
+    width: clamp(360px, 46vw, 640px);
     height: auto;
     filter: grayscale(1);
   }
@@ -208,7 +209,7 @@ const metricas = [
     }
 
     .hero__watermark img {
-      width: clamp(300px, 82vw, 560px);
+      width: clamp(240px, 70vw, 420px);
     }
 
     .hero__metrics {
