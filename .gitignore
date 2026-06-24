@@ -13,3 +13,7 @@ referencias/
 
 # artefactos de revisión visual (screenshots/scripts locales)
 _review/
+
+# vercel
+.vercel/
+.vercel

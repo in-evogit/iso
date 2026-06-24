@@ -17,12 +17,12 @@ const metricas = [
     muted
     loop
     playsinline
-    preload="none"
+    preload="auto"
     poster="/assets/video/hero-sorter-poster.jpg"
     aria-hidden="true"
     data-hero-video
-    data-src="/assets/video/hero-sorter.mp4"
   >
+    <source src="/assets/video/hero-sorter.mp4" type="video/mp4" />
   </video>
 
   <div class="hero__scrim" aria-hidden="true"></div>
@@ -231,25 +231,14 @@ const metricas = [
 </style>
 
 <script>
-  // Carga el video solo en desktop y sin prefers-reduced-motion.
-  // En movil / reduced-motion queda el poster (evita bajar ~11 MB).
+  // Asegura el autoplay en todos los navegadores. El atributo `muted` no
+  // siempre basta (Safari exige la propiedad), y algunos navegadores necesitan
+  // un play() explicito. El video es liviano (~2.5 MB), se carga siempre.
   const video = document.querySelector<HTMLVideoElement>("[data-hero-video]");
   if (video) {
-    const wantsVideo =
-      window.matchMedia("(min-width: 768px)").matches &&
-      !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    if (wantsVideo) {
-      const src = video.dataset.src;
-      if (src) {
-        const source = document.createElement("source");
-        source.src = src;
-        source.type = "video/mp4";
-        video.appendChild(source);
-        video.load();
-        // Algunos navegadores requieren play() explicito tras inyectar source
-        video.play?.().catch(() => {});
-      }
-    }
+    video.muted = true;
+    const tryPlay = () => video.play().catch(() => {});
+    tryPlay();
+    video.addEventListener("canplay", tryPlay, { once: true });
   }
 </script>
